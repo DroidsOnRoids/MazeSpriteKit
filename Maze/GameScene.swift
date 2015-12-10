@@ -10,8 +10,8 @@ import CoreMotion
 import SpriteKit
 
 struct Collision {
-    static let Ball: UInt32 = 0x1 << 0 // bin(1) = dec(1)
-    static let BlackHole: UInt32 = 0x1 << 1 // bin(10) = dec(2)
+    static let Ball: UInt32 = 0x1 << 0       // bin(001) = dec(1)
+    static let BlackHole: UInt32 = 0x1 << 1  // bin(010) = dec(2)
     static let FinishHole: UInt32 = 0x1 << 2 // bin(100) = dec(4)
 }
 
@@ -29,10 +29,9 @@ class GameScene: SKScene {
         
         physicsWorld.contactDelegate = self
         
-        /* Setup your scene here */
         ball = SKSpriteNode(imageNamed: "Ball")
         ball.position = CGPoint(x: CGRectGetMidX(frame), y: CGRectGetMidY(frame))
-        ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.frame.size.height / 2.0)
+        ball.physicsBody = SKPhysicsBody(circleOfRadius: CGRectGetHeight(ball.frame) / 2.0)
         ball.physicsBody?.mass = 4.5
         ball.physicsBody?.allowsRotation = false
         ball.physicsBody?.dynamic = true // necessary to detect collision
@@ -50,14 +49,15 @@ class GameScene: SKScene {
     }
     
     override func update(currentTime: CFTimeInterval) {
-        /* Called before each frame is rendered */
         if let gravityX = manager?.deviceMotion?.gravity.x, gravityY = manager?.deviceMotion?.gravity.y where ball != nil {
             // let newPosition = CGPoint(x: Double(ball.position.x) + gravityX * 35.0, y: Double(ball.position.y) + gravityY * 35.0)
             // let moveAction = SKAction.moveTo(newPosition, duration: 0.0)
             // ball.runAction(moveAction)
             
             // applyImpulse() is much better than applyForce()
-            ball.physicsBody?.applyImpulse(CGVector(dx: CGFloat(gravityX) * 200.0, dy: CGFloat(gravityY) * 200.0))
+            ball.physicsBody?.applyForce(CGVector(dx: CGFloat(gravityX) * 200.0, dy: CGFloat(gravityY) * 200.0))
+            
+//            ball.physicsBody?.applyImpulse(CGVector(dx: CGFloat(gravityX) * 200.0, dy: CGFloat(gravityY) * 200.0))
         }
     }
     
