@@ -69,7 +69,7 @@ class GameScene: SKScene {
             // ball.runAction(moveAction)
             
             // applyImpulse() is much better than applyForce()
-            // ball.physicsBody?.applyForce(CGVector(dx: CGFloat(gravityX) * 200.0, dy: CGFloat(gravityY) * 200.0))
+            // ball.physicsBody?.applyForce(CGVector(dx: CGFloat(gravityX) * 5000.0, dy: CGFloat(gravityY) * 5000.0))
             
             ball.physicsBody?.applyImpulse(CGVector(dx: CGFloat(gravityX) * 200.0, dy: CGFloat(gravityY) * 200.0))
         }
